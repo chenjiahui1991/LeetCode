@@ -1,6 +1,4 @@
-l = set()
-l.add(1)
-l.add(1)
-l.add(3)
-l.add(-1)
-print(list(l).sort())
+a = '123'
+a = a * 2
+a[3] = 'a'
+print(a)
