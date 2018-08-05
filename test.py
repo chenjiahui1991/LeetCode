@@ -1,1 +1,6 @@
-print(int('26'))
+l = set()
+l.add(1)
+l.add(1)
+l.add(3)
+l.add(-1)
+print(list(l).sort())

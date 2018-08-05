@@ -21,3 +21,18 @@ def constructTree(valueList):
     return nodeList[0]
 
 
+class ListNode:
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+
+
+def constructList(valueList):
+    if len(valueList) == 0:
+        return None
+    result = ListNode(valueList[0])
+    last = result
+    for val in valueList[1:]:
+        last.next = ListNode(val)
+        last = last.next
+    return result

@@ -20,6 +20,7 @@ class Solution:
                 total[j][i] = max(total[j - 1][i], local[j][i])
         return total[-1][-1]
 
+
 s = Solution()
-print(s.maxProfit(100, [3,2,6,5,0,3]))
+print(s.maxProfit(2, [3,2,6,5,0,3]))
 print(s.maxProfit(2, [2, 4, 1]))
