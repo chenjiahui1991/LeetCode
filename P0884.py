@@ -1,29 +1,27 @@
+from collections import defaultdict
+
 class Solution:
-    def decodeAtIndex(self, S, K):
+    def uncommonFromSentences(self, A, B):
         """
-        :type S: str
-        :type K: int
-        :rtype: str
+        :type A: str
+        :type B: str
+        :rtype: List[str]
         """
-        def getNumber(S, K):
-            total = 0
-            for i, ch in enumerate(S):
-                if 'a' <= ch <= 'z':
-                    total = total + 1
-                else:
-                    total = total * int(ch)
-                if total >= K:
-                    if 'a' <= ch <= 'z':
-                        return ch
-                    else:
-                        lastLength = total // int(ch)
-                        K = K % lastLength
-                        if K == 0: K = lastLength
-                        return getNumber(S[: i], K)
-        return getNumber(S, K)
+        wordDict1 = defaultdict(lambda :0)
+        wordDict2 = defaultdict(lambda :0)
+        words1 = A.split()
+        for word in words1:
+            wordDict1[word] += 1
+        words2 = B.split()
+        for word in words2:
+            wordDict2[word] += 1
+        result = []
+        for word in wordDict1:
+            if wordDict1[word] == 1 and word not in wordDict2: result.append(word)
+        for word in wordDict2:
+            if wordDict2[word] == 1 and word not in wordDict1: result.append(word)
+        return result
 
 s = Solution()
-print(s.decodeAtIndex("leet2code3", 10))
-print(s.decodeAtIndex("ha22", 5))
-print(s.decodeAtIndex("a2345678999999999999999", 10))
-
+print(s.uncommonFromSentences("this apple is sweet", "this apple is sour"))
+print(s.uncommonFromSentences("apple apple", ""))

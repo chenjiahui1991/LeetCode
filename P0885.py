@@ -1,28 +1,29 @@
 class Solution:
-    def numRescueBoats(self, people, limit):
+    def spiralMatrixIII(self, R, C, r0, c0):
         """
-        :type people: List[int]
-        :type limit: int
-        :rtype: int
+        :type n: int
+        :rtype: List[List[int]]
         """
-        people.sort()
-        left, right = 0, len(people) - 1
-        result = 0
-        while left < right:
-            if people[left] + people[right] <= limit:
-                left += 1
-                right -= 1
-                result += 1
-            else:
-                right -= 1
-                result += 1
-        if left == right: result += 1
+        step = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+        result = [[r0, c0]]
+        x = r0
+        y = c0
+        direction = 0
+        count = 1
+        base = 0
+        while count < R * C:
+            for i in range(base // 2 + 1):
+                x = x + step[direction][0]
+                y = y + step[direction][1]
+                if 0 <= x < R and 0 <= y < C:
+                    result.append([x, y])
+                    count += 1
+            base += 1
+            direction = (direction + 1) % 4
         return result
 
 
 
 s = Solution()
-print(s.numRescueBoats([1,2], 3))
-print(s.numRescueBoats([3,2,2,1],3))
-print(s.numRescueBoats([3, 4, 3, 4], 5))
-
+print(s.spiralMatrixIII(1, 4, 0, 0))
+print(s.spiralMatrixIII(5, 6, 1, 4))

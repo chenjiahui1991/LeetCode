@@ -1,29 +1,29 @@
+# Definition for a binary tree node.
+class TreeNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+
 class Solution:
-    def spiralMatrixIII(self, R, C, r0, c0):
+    def constructFromPrePost(self, pre, post):
         """
-        :type n: int
-        :rtype: List[List[int]]
+        :type pre: List[int]
+        :type post: List[int]
+        :rtype: TreeNode
         """
-        step = [(0, 1), (1, 0), (0, -1), (-1, 0)]
-        result = [[r0, c0]]
-        x = r0
-        y = c0
-        direction = 0
-        count = 1
-        base = 0
-        while count < R * C:
-            for i in range(base // 2 + 1):
-                x = x + step[direction][0]
-                y = y + step[direction][1]
-                if 0 <= x < R and 0 <= y < C:
-                    result.append([x, y])
-                    count += 1
-            base += 1
-            direction = (direction + 1) % 4
-        return result
+        if len(pre) == 0:
+            return None
+        if len(pre) == 1:
+            return TreeNode(pre[0])
+        node = TreeNode(pre[0])
+        idx = post.index(pre[1])
+        node.left = self.constructFromPrePost(pre[1 : idx + 2], post[: idx + 1])
+        node.right = self.constructFromPrePost(pre[idx + 2 :], post[idx + 1 : -1])
+        return node
 
 
-
+pre = [1, 2, 4, 5, 3, 6, 7]
+post = [4, 5, 2, 6, 7, 3, 1]
 s = Solution()
-print(s.spiralMatrixIII(1, 4, 0, 0))
-print(s.spiralMatrixIII(5, 6, 1, 4))
+node = s.constructFromPrePost(pre, post)

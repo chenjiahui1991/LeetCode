@@ -1,27 +1,28 @@
-from collections import defaultdict
-
 class Solution:
-    def uncommonFromSentences(self, A, B):
+    def fairCandySwap(self, A, B):
         """
-        :type A: str
-        :type B: str
-        :rtype: List[str]
+        :type A: List[int]
+        :type B: List[int]
+        :rtype: List[int]
         """
-        wordDict1 = defaultdict(lambda :0)
-        wordDict2 = defaultdict(lambda :0)
-        words1 = A.split()
-        for word in words1:
-            wordDict1[word] += 1
-        words2 = B.split()
-        for word in words2:
-            wordDict2[word] += 1
-        result = []
-        for word in wordDict1:
-            if wordDict1[word] == 1 and word not in wordDict2: result.append(word)
-        for word in wordDict2:
-            if wordDict2[word] == 1 and word not in wordDict1: result.append(word)
-        return result
+        totalA = sum(A)
+        totalB = sum(B)
 
+        flag = set()
+        for b in B:
+            flag.add(b)
+        delta = (totalB - totalA) // 2
+        for a in A:
+            if (a + delta) in flag:
+                return [a, a + delta]
+        return None
+
+
+
+A = [1, 2, 5]
+B = [2, 4]
 s = Solution()
-print(s.uncommonFromSentences("this apple is sweet", "this apple is sour"))
-print(s.uncommonFromSentences("apple apple", ""))
+# for i in range(30):
+#     print(s.superEggDrop(3, i), end=',')
+# print()
+print(s.fairCandySwap(A, B))

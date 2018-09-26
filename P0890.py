@@ -1,35 +1,26 @@
-from collections import defaultdict
-
 class Solution:
-    def possibleBipartition(self, N, dislikes):
+    def findAndReplacePattern(self, words, pattern):
         """
-        :type N: int
-        :type dislikes: List[List[int]]
-        :rtype: bool
+        :type words: List[str]
+        :type pattern: str
+        :rtype: List[str]
         """
-        next = defaultdict(list)
-        for i, j in dislikes:
-            next[i].append(j)
-            next[j].append(i)
-        color = [0 for _ in range(N + 1)]
-        for i in range(1, N + 1):
-            if color[i] == 0:
-                line = [i]
-                color[i] = 1
-                point = 0
-                while point < len(line):
-                    now = line[point]
-                    for j in next[now]:
-                        if color[j] != 0 and color[j] == color[now]: return False
-                        if color[j] == 0:
-                            color[j] = 3 - color[now]
-                            line.append(j)
-                    point += 1
-        return True
+        def checkPattern(word, pattern):
+            if len(word) != len(pattern): return False
+            p2w = dict()
+            w2p = dict()
+            for i in range(len(word)):
+                if word[i] in w2p and pattern[i] != w2p[word[i]]: return False
+                if pattern[i] in p2w and word[i] != p2w[pattern[i]] : return False
+                w2p[word[i]] = pattern[i]
+                p2w[pattern[i]] = word[i]
+            return True
 
+        result = []
+        for word in words:
+            if checkPattern(word, pattern): result.append(word)
+        return result
 
 
 s = Solution()
-print(s.possibleBipartition(4, []))
-print(s.possibleBipartition(3, [[1,2],[1,3],[2,3]]))
-print(s.possibleBipartition(5, [[1,2],[2,3],[3,4],[4,5],[1,5]]))
+print(s.findAndReplacePattern(["abc","deq","mee","aqq","dkd","ccc"], "abb"))
